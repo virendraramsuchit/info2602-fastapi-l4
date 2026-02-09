@@ -1,15 +1,17 @@
 from pwdlib import PasswordHash
-from app.models import *
+from app.models import RegularUser, User
 from app.database import get_session
 from sqlmodel import select
 from datetime import timedelta, datetime, timezone
-from app.database import SessionDep
+from app.database import SessionDep, get_session
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, APIRouter
 import jwt
 from jwt.exceptions import InvalidTokenError
-
+from app.auth import encrypt_password, verify_password, create_access_token, AuthDep, get_current_user
+from fasrapi.security import OAuth2PasswordRequestForm
+from typing import Annotated
 
 SECRET_KEY = "ThisIsAnExampleOfWhatNotToUseAsTheSecretKeyIRL"
 ALGORITHM = "HS256"
@@ -54,3 +56,5 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Ses
     return user
 
 AuthDep = Annotated[User, Depends(get_current_user)]
+
+
