@@ -10,7 +10,7 @@ from fastapi import Depends, HTTPException, status, APIRouter
 import jwt
 from jwt.exceptions import InvalidTokenError
 from app.auth import encrypt_password, verify_password, create_access_token, AuthDep, get_current_user
-from fasrapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
 SECRET_KEY = "ThisIsAnExampleOfWhatNotToUseAsTheSecretKeyIRL"
